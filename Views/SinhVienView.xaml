@@ -1,0 +1,46 @@
+﻿<Window x:Class="QLSVNhom.Views.SinhVienView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Quản lý Sinh Viên" Height="400" Width="600">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <!-- Ô nhập thông tin sinh viên -->
+            <RowDefinition Height="*"/>
+            <!-- Bảng danh sách sinh viên -->
+            <RowDefinition Height="Auto"/>
+            <!-- Nút chức năng -->
+        </Grid.RowDefinitions>
+
+        <StackPanel Orientation="Horizontal" Grid.Row="0" Visibility="Collapsed" x:Name="AddPanel">
+            <TextBlock Text="Mã SV:" VerticalAlignment="Center" Margin="0,0,5,0"/>
+            <TextBox Width="100" Text="{Binding NewSinhVien.MaSV, UpdateSourceTrigger=PropertyChanged}"/>
+
+            <TextBlock Text="Họ Tên:" VerticalAlignment="Center" Margin="10,0,5,0"/>
+            <TextBox Width="150" Text="{Binding NewSinhVien.HoTen, UpdateSourceTrigger=PropertyChanged}"/>
+
+            <TextBlock Text="Tên Đăng Nhập:" VerticalAlignment="Center" Margin="10,0,5,0"/>
+            <TextBox Width="150" Text="{Binding NewSinhVien.TenDN, UpdateSourceTrigger=PropertyChanged}"/>
+            
+            <TextBlock Text="Mật Khẩu:" VerticalAlignment="Center" Margin="10,0,5,0"/>
+            <PasswordBox Width="150" x:Name="TxtPassword"/>
+
+
+            <Button Content="Xác nhận Thêm" Width="120" Margin="10,0,0,0" Click="ConfirmAdd"/>
+        </StackPanel>
+        
+        <DataGrid ItemsSource="{Binding DsSinhVien}" AutoGenerateColumns="False" Grid.Row="1">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Mã SV" Binding="{Binding MaSV}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Họ Tên" Binding="{Binding HoTen}"/>
+                <DataGridTextColumn Header="Ngày Sinh" Binding="{Binding NgaySinh}"/>
+                <DataGridTextColumn Header="Mã Lớp" Binding="{Binding MaLop}" IsReadOnly="True"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <StackPanel Orientation="Horizontal" Grid.Row="2" HorizontalAlignment="Center" Margin="10">
+            <Button Content="Thêm Sinh Viên" Width="120" Margin="5" Command="{Binding ConfirmAddCommand}"/>
+            <Button Content="Xóa Sinh Viên" Width="120" Margin="5" Command="{Binding DeleteStudentCommand}"/>
+        </StackPanel>
+    </Grid>
+</Window>

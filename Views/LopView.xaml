@@ -1,0 +1,68 @@
+﻿<Window x:Class="QLSVNhom.Views.LopView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="clr-namespace:QLSVNhom.ViewModels"
+        Title="Quản lý Lớp" Height="400" Width="600">
+    <Window.DataContext>
+        <vm:LopViewModel/>
+    </Window.DataContext>
+
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <!-- Ô nhập mã lớp cần xóa -->
+            <RowDefinition Height="*"/>
+            <!-- Bảng danh sách lớp -->
+            <RowDefinition Height="Auto"/>
+            <!-- Nút chức năng -->
+        </Grid.RowDefinitions>
+
+        <StackPanel Orientation="Horizontal" Grid.Row="0" Visibility="Collapsed" x:Name="AddPanel">
+            <TextBlock Text="Mã Lớp:" VerticalAlignment="Center" Margin="0,0,5,0"/>
+            <TextBox x:Name="TxtMaLopMoi" Width="100" Text="{Binding MaLopMoi, UpdateSourceTrigger=PropertyChanged}"/>
+
+            <TextBlock Text="Tên Lớp:" VerticalAlignment="Center" Margin="10,0,5,0"/>
+            <TextBox x:Name="TxtTenLopMoi" Width="150" Text="{Binding TenLopMoi, UpdateSourceTrigger=PropertyChanged}"/>
+
+            <TextBlock Text="Mã GV:" VerticalAlignment="Center" Margin="10,0,5,0"/>
+            <TextBox x:Name="TxtMaNVMoi" Width="100" Text="{Binding MaNVMoi, UpdateSourceTrigger=PropertyChanged}"/>
+
+            <Button Content="Xác nhận Thêm" Width="120" Margin="10,0,0,0" Click="ConfirmAdd"/>
+        </StackPanel>
+
+        <!-- Ô nhập mã lớp cần xóa -->
+        <StackPanel Orientation="Horizontal" Grid.Row="0" Visibility="Collapsed" x:Name="DeletePanel">
+            <TextBlock Text="Nhập mã lớp cần xóa:" VerticalAlignment="Center" Margin="0,0,10,0"/>
+            <TextBox x:Name="TxtMaLopToDelete" Width="150" Text="{Binding MaLopToDelete, UpdateSourceTrigger=PropertyChanged}"/>
+            <Button Content="Xác nhận Xóa" Width="120" Margin="5,0,0,0" Click="ConfirmDelete"/>
+        </StackPanel>
+
+        <!-- Bảng danh sách lớp -->
+        <DataGrid ItemsSource="{Binding DsLop}" SelectedItem="{Binding SelectedLop}" AutoGenerateColumns="False" 
+                  Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Mã Lớp" Binding="{Binding MaLop}" Width="*" />
+                <DataGridTextColumn Header="Tên Lớp" Binding="{Binding TenLop}" Width="*" />
+                <DataGridTextColumn Header="Mã GV" Binding="{Binding MaNV}" Width="*" />
+            </DataGrid.Columns>
+        </DataGrid>
+        
+        <!-- Các nút chức năng -->
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="2" Margin="10">
+            <Button Content="Tải Lớp" Command="{Binding LoadDataCommand}" Width="100" Margin="5"/>
+            <Button Content="Thêm" Width="100" Margin="5" Click="ShowAddPanel"/>
+            <Button Content="Xóa" Width="100" Margin="5" Click="ShowDeletePanel"/>
+            <Button Content="Xem Sinh Viên" Click="ShowViewPanel" Margin="5" Width="100"/>
+
+        </StackPanel>
+
+        <StackPanel x:Name="ViewPanel" Visibility="Collapsed" Orientation="Horizontal" Grid.Row="0">
+            <TextBlock Text="Nhập Mã Lớp:" FontWeight="Bold"/>
+            <TextBox Text="{Binding MaLopNhap, UpdateSourceTrigger=PropertyChanged}" Width="150" Margin="5"/>
+            <StackPanel Orientation="Horizontal">
+                <Button Content="Xác Nhận" Click="ConfirmView" Margin="5"/>
+            </StackPanel>
+        </StackPanel>
+
+    </Grid>
+</Window>
