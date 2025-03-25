@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "M3ZmDq/QRU2U5jIRlQFsBII+FsAX5rK9rrfVA9/xy3aWggN0Otv7Q4cNQuEFie9oaSlw696i51NCCE7Pn1064Q==",
+  "dgSpecHash": "5kNFz4atGj5ERalcAC7i+adcfQfCoD7jt+UiQ01J0McYbKiaCdI6s+iQyhntpShZMqooTab3GEZiIBVrk1+gzg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\LENOVO\\OneDrive\\Máy tính\\13_22127021_22127279\\test\\QLSVNhom\\QLSVNhom.csproj",
+  "projectFilePath": "C:\\Users\\LENOVO\\OneDrive\\Máy tính\\13_22127021_22127279\\test\\QLSVNhom_lab4\\QLSVNhom.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\LENOVO\\.nuget\\packages\\azure.core\\1.24.0\\azure.core.1.24.0.nupkg.sha512",
     "C:\\Users\\LENOVO\\.nuget\\packages\\azure.identity\\1.6.0\\azure.identity.1.6.0.nupkg.sha512",

@@ -2731,11 +2731,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\LENOVO\\OneDrive\\Máy tính\\13_22127021_22127279\\test\\QLSVNhom\\QLSVNhom.csproj",
+      "projectUniqueName": "C:\\Users\\LENOVO\\OneDrive\\Máy tính\\13_22127021_22127279\\test\\QLSVNhom_lab4\\QLSVNhom.csproj",
       "projectName": "QLSVNhom",
-      "projectPath": "C:\\Users\\LENOVO\\OneDrive\\Máy tính\\13_22127021_22127279\\test\\QLSVNhom\\QLSVNhom.csproj",
+      "projectPath": "C:\\Users\\LENOVO\\OneDrive\\Máy tính\\13_22127021_22127279\\test\\QLSVNhom_lab4\\QLSVNhom.csproj",
       "packagesPath": "C:\\Users\\LENOVO\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\LENOVO\\OneDrive\\Máy tính\\13_22127021_22127279\\test\\QLSVNhom\\obj\\",
+      "outputPath": "C:\\Users\\LENOVO\\OneDrive\\Máy tính\\13_22127021_22127279\\test\\QLSVNhom_lab4\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\LENOVO\\AppData\\Roaming\\NuGet\\NuGet.Config",
