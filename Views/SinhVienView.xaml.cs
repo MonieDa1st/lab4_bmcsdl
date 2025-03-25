@@ -1,17 +1,9 @@
-﻿using QLSVNhom.ViewModels;
+﻿using QLSVNhom.Models;
+using QLSVNhom.ViewModels;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+
 
 namespace QLSVNhom.Views
 {
@@ -25,30 +17,72 @@ namespace QLSVNhom.Views
         {
             InitializeComponent();
             viewModel = new SinhVienViewModel(manv, selectedLop);
-            DataContext = viewModel;
+            this.DataContext = viewModel;
         }
 
         private void ShowAddPanel(object sender, RoutedEventArgs e)
         {
             AddPanel.Visibility = Visibility.Visible;
-            var viewModel = (SinhVienViewModel)DataContext;
             viewModel.NewSinhVien = new QLSVNhom.Models.SinhVien(); // Reset giá trị trước khi nhập
+            TxtPassword.Password = string.Empty; // Đảm bảo mật khẩu không giữ giá trị cũ
         }
+
 
         private void ConfirmAdd(object sender, RoutedEventArgs e)
         {
             var viewModel = (SinhVienViewModel)DataContext;
-            if (string.IsNullOrWhiteSpace(viewModel.NewSinhVien.MaSV) ||
-                string.IsNullOrWhiteSpace(viewModel.NewSinhVien.HoTen) ||
-                string.IsNullOrWhiteSpace(viewModel.NewSinhVien.TenDN))
+
+            viewModel.NewSinhVien.MatKhau = TxtPassword.Password;
+
+
+            viewModel.ConfirmAddCommand.Execute(null);
+
+            // Ẩn panel sau khi thêm sinh viên
+            AddPanel.Visibility = Visibility.Collapsed;
+        }
+
+        private void ShowDeletePanel(object sender, RoutedEventArgs e)
+        {
+            DeletePanel.Visibility = Visibility.Visible;
+            viewModel.MaSVXoa = "";
+        }
+
+
+        private void ConfirmDelete(object sender, RoutedEventArgs e)
+        {
+            var viewModel = (SinhVienViewModel)DataContext;
+
+            viewModel.DeleteStudentCommand.Execute(viewModel.MaSVXoa);
+            DeletePanel.Visibility = Visibility.Collapsed;
+        }
+
+        private void OpenBangDiem(object sender, RoutedEventArgs e)
+        {
+            var viewModel = (SinhVienViewModel)DataContext;
+
+            if (viewModel.SelectedSinhVien == null)
             {
-                MessageBox.Show("Vui lòng nhập đầy đủ thông tin sinh viên trước khi tiếp tục!");
+                MessageBox.Show("Vui lòng chọn một sinh viên từ danh sách.");
                 return;
             }
 
-            viewModel.ConfirmAddCommand.Execute(null);
-            AddPanel.Visibility = Visibility.Collapsed; // Ẩn panel sau khi thêm sinh viên
+            BangDiemView bangDiemView = new BangDiemView(LoggedInUser.Manv, viewModel.SelectedSinhVien.MaSV);
+            bangDiemView.Show();
         }
-    }
 
+        private void ShowEnterScorePanel(object sender, RoutedEventArgs e)
+        {
+            ScorePanel.Visibility = Visibility.Visible;
+            viewModel.NewBangDiem = new QLSVNhom.Models.BangDiem(); // Reset dữ liệu nhập
+        }
+
+        private void ConfirmSaveDiem(object sender, RoutedEventArgs e)
+        {
+            viewModel.SaveDiemCommand.Execute(null);
+            ScorePanel.Visibility = Visibility.Collapsed;
+        }
+
+
+    }
 }
+    

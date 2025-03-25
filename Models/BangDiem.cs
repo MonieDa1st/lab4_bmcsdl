@@ -9,13 +9,13 @@ namespace QLSVNhom.Models
     {
         public string MaSV { get; set; } // Khóa chính
         public string MaHP { get; set; } // Khóa chính
-        public byte[] DiemThi { get; set; } // Mã hóa điểm
+        public double DiemThi { get; set; } // Mã hóa điểm
 
         public BangDiem() 
         { 
             MaSV = string.Empty;
             MaHP = string.Empty;
-            DiemThi = new byte[0];
+            DiemThi = 0;
         }
     }
 }

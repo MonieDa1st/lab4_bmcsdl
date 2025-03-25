@@ -6,6 +6,7 @@ using System.Windows;
 using System.Windows.Input;
 using Microsoft.Data.SqlClient;
 using QLSVNhom.Models;
+using QLSVNhom.Views;
 
 namespace QLSVNhom.ViewModels
 {
@@ -16,20 +17,32 @@ namespace QLSVNhom.ViewModels
         public bool CanEdit { get; set; } // Xác định quyền thêm/xóa sinh viên
         public ObservableCollection<SinhVien> DsSinhVien { get; set; } // Danh sách sinh viên
 
-        public ICommand ShowAddPanelCommand { get; }
+        public ICommand ShowAddPanel { get; }
         public ICommand ConfirmAddCommand { get; }
+
+        public ICommand ShowDeletePanel { get; }
         public ICommand DeleteStudentCommand { get; }
 
-        public SinhVien NewSinhVien { get; set; }
+        public ICommand ShowEnterScorePanelCommand { get; }
+        public ICommand SaveDiemCommand { get; }
+
+
+        //public SinhVien NewSinhVien { get; set; }
         public SinhVien SelectedSinhVien { get; set; }
 
         public SinhVienViewModel(string manv, string selectedLop = null)
         {
             LoggedInMaNV = manv;
             DsSinhVien = new ObservableCollection<SinhVien>();
-            DeleteStudentCommand = new RelayCommand(_ => DeleteStudent(), _ => CanEdit);
-            ShowAddPanelCommand = new RelayCommand(_ => { IsAdding = true; OnPropertyChanged(nameof(IsAdding)); });
-            ConfirmAddCommand = new RelayCommand(_ => ConfirmAdd(), _ => CanEdit);
+            ShowDeletePanel = new RelayCommand(_ => { IsDeleting = true; OnPropertyChanged(nameof(IsDeleting)); }, _ => CanEdit);
+            DeleteStudentCommand = new RelayCommand(_ => DeleteStudent());
+            ShowAddPanel = new RelayCommand(_ => { IsAdding = true; OnPropertyChanged(nameof(IsAdding)); }, _ => CanEdit);
+            ConfirmAddCommand = new RelayCommand(_ => ConfirmAdd());
+            ShowEnterScorePanelCommand = new RelayCommand(_ => ShowEnterScorePanel(), _ => CanEdit);
+            SaveDiemCommand = new RelayCommand(_ => SaveDiem());
+            NewBangDiem = new BangDiem();
+
+
 
 
             if (!string.IsNullOrEmpty(selectedLop))
@@ -74,20 +87,38 @@ namespace QLSVNhom.ViewModels
             set { _isAdding = value; OnPropertyChanged(nameof(IsAdding)); }
         }
 
-        private void ShowAddPanel()
+        private SinhVien _newSinhVien;
+        public SinhVien NewSinhVien
         {
-            IsAdding = true;
-            NewSinhVien = new SinhVien();
+            get => _newSinhVien;
+            set
+            {
+                _newSinhVien = value;
+                OnPropertyChanged(nameof(NewSinhVien)); // Cập nhật UI
+            }
         }
 
         private void ConfirmAdd()
         {
-            if (NewSinhVien == null || string.IsNullOrEmpty(NewSinhVien.MaSV) ||
-                string.IsNullOrEmpty(NewSinhVien.HoTen) || string.IsNullOrEmpty(NewSinhVien.TenDN) || NewSinhVien.MatKhau == null)
+            if (string.IsNullOrWhiteSpace(NewSinhVien.MaSV))
             {
-                MessageBox.Show("Vui lòng nhập thông tin sinh viên hợp lệ!");
+                MessageBox.Show("Vui lòng nhập Mã Sinh Viên!");
                 return;
             }
+
+            if (string.IsNullOrWhiteSpace(NewSinhVien.HoTen))
+            {
+                MessageBox.Show("Vui lòng nhập Họ Tên!");
+                return;
+            }
+
+            if (string.IsNullOrWhiteSpace(NewSinhVien.TenDN))
+            {
+                MessageBox.Show("Vui lòng nhập Tên Đăng Nhập!");
+                return;
+            }
+
+
 
             string query = "EXEC SP_INSERT_STUDENT @MaSV, @HoTen, @NgaySinh, @DiaChi, @MaLop, @TenDN, @MatKhau";
             DatabaseHelper.ExecuteNonQuery(query,
@@ -102,13 +133,85 @@ namespace QLSVNhom.ViewModels
             MessageBox.Show("Thêm sinh viên thành công!");
             LoadStudents();
             IsAdding = false;
+            OnPropertyChanged(nameof(IsAdding));
+
+        }
+
+        private string _maSVXoa;
+        public string MaSVXoa
+        {
+            get { return _maSVXoa; }
+            set { _maSVXoa = value; OnPropertyChanged(nameof(MaSVXoa)); }
+        }
+
+        private bool _isDeleting;
+        public bool IsDeleting
+        {
+            get { return _isDeleting; }
+            set { _isDeleting = value; OnPropertyChanged(nameof(IsDeleting)); }
         }
 
         private void DeleteStudent()
         {
-            // Xóa sinh viên khỏi lớp
-            MessageBox.Show("Xóa sinh viên khỏi lớp " + SelectedLop);
+            if (string.IsNullOrWhiteSpace(MaSVXoa))
+            {
+                MessageBox.Show("Vui lòng nhập mã sinh viên cần xóa.");
+                return;
+            }
+
+            string query = "EXEC SP_DELETE_STUDENT @MaSV";
+            DatabaseHelper.ExecuteNonQuery(query,
+                new SqlParameter("@MaSV", MaSVXoa));
+
+            MessageBox.Show("Xóa sinh viên thành công!");
+            MaSVXoa = string.Empty; // Clear the input after deletion
+            LoadStudents();
+            IsDeleting = false;
+            OnPropertyChanged(nameof(IsDeleting));
         }
+
+        private bool _isEnteringScore;
+        public bool IsEnteringScore
+        {
+            get { return _isEnteringScore; }
+            set { _isEnteringScore = value; OnPropertyChanged(nameof(IsEnteringScore)); }
+        }
+
+        private BangDiem _newBangDiem;
+        public BangDiem NewBangDiem
+        {
+            get { return _newBangDiem; }
+            set { _newBangDiem = value; OnPropertyChanged(nameof(NewBangDiem)); }
+        }
+
+        private void ShowEnterScorePanel()
+        {
+            IsEnteringScore = true;
+            NewBangDiem = new BangDiem(); // Reset dữ liệu nhập
+        }
+
+        private void SaveDiem()
+        {
+            if (string.IsNullOrWhiteSpace(NewBangDiem.MaSV) || string.IsNullOrWhiteSpace(NewBangDiem.MaHP) || NewBangDiem.DiemThi < 0 || NewBangDiem.DiemThi > 10)
+            {
+                MessageBox.Show("Vui lòng nhập đúng thông tin!");
+                return;
+            }
+
+            string query = "EXEC SP_INS_PUBLIC_BANGDIEM @MaSV, @MaHP, @DiemThi, @MaNV";
+            DatabaseHelper.ExecuteNonQuery(query,
+                new SqlParameter("@MaSV", NewBangDiem.MaSV),
+                new SqlParameter("@MaHP", NewBangDiem.MaHP),
+                new SqlParameter("@DiemThi", NewBangDiem.DiemThi),
+                new SqlParameter("@MaNV", LoggedInUser.Manv)
+                );
+
+            MessageBox.Show("Lưu điểm thành công!");
+            IsEnteringScore = false;  // Ẩn bảng nhập sau khi lưu
+            OnPropertyChanged(nameof(IsEnteringScore));
+
+        }
+
 
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged(string propertyName) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));

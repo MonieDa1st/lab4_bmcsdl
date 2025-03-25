@@ -56,3 +56,5 @@ C:\Users\LENOVO\OneDrive\Máy tính\13_22127021_22127279\test\QLSVNhom\obj\Debug
 C:\Users\LENOVO\OneDrive\Máy tính\13_22127021_22127279\test\QLSVNhom\obj\Debug\net7.0-windows\Views\LopView.g.cs
 C:\Users\LENOVO\OneDrive\Máy tính\13_22127021_22127279\test\QLSVNhom\obj\Debug\net7.0-windows\Views\SinhVienView.baml
 C:\Users\LENOVO\OneDrive\Máy tính\13_22127021_22127279\test\QLSVNhom\obj\Debug\net7.0-windows\Views\SinhVienView.g.cs
+C:\Users\LENOVO\OneDrive\Máy tính\13_22127021_22127279\test\QLSVNhom\obj\Debug\net7.0-windows\Views\BangDiemView.baml
+C:\Users\LENOVO\OneDrive\Máy tính\13_22127021_22127279\test\QLSVNhom\obj\Debug\net7.0-windows\Views\BangDiemView.g.cs

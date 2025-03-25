@@ -14,7 +14,7 @@ namespace QLSVNhom.Models
         public string DiaChi { get; set; }
         public string MaLop { get; set; }
         public string TenDN { get; set; } // Unique
-        public byte[] MatKhau { get; set; }
+        public string MatKhau { get; set; }
 
         public SinhVien()
         { 
@@ -23,7 +23,7 @@ namespace QLSVNhom.Models
             DiaChi = string.Empty;
             MaLop = string.Empty;
             TenDN = string.Empty;
-            MatKhau = new byte[0];
+            MatKhau = string.Empty;
         }
     }
 }

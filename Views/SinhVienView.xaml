@@ -17,19 +17,32 @@
             <TextBox Width="100" Text="{Binding NewSinhVien.MaSV, UpdateSourceTrigger=PropertyChanged}"/>
 
             <TextBlock Text="Họ Tên:" VerticalAlignment="Center" Margin="10,0,5,0"/>
-            <TextBox Width="150" Text="{Binding NewSinhVien.HoTen, UpdateSourceTrigger=PropertyChanged}"/>
+            <TextBox Width="100" Text="{Binding NewSinhVien.HoTen, UpdateSourceTrigger=PropertyChanged}"/>
+
+            <TextBlock Text="Ngày sinh:" VerticalAlignment="Center" Margin="10,0,5,0"/>
+            <DatePicker SelectedDate="{Binding NewSinhVien.NgaySinh, UpdateSourceTrigger=PropertyChanged}"/>
+
+            <TextBlock Text="Địa Chỉ:" VerticalAlignment="Center" Margin="10,0,5,0"/>
+            <TextBox Width="100" Text="{Binding NewSinhVien.DiaChi,UpdateSourceTrigger=PropertyChanged}"/>
 
             <TextBlock Text="Tên Đăng Nhập:" VerticalAlignment="Center" Margin="10,0,5,0"/>
-            <TextBox Width="150" Text="{Binding NewSinhVien.TenDN, UpdateSourceTrigger=PropertyChanged}"/>
+            <TextBox Width="100" Text="{Binding NewSinhVien.TenDN, UpdateSourceTrigger=PropertyChanged}"/>
             
             <TextBlock Text="Mật Khẩu:" VerticalAlignment="Center" Margin="10,0,5,0"/>
-            <PasswordBox Width="150" x:Name="TxtPassword"/>
+            <PasswordBox Width="100" x:Name="TxtPassword"/>
 
 
             <Button Content="Xác nhận Thêm" Width="120" Margin="10,0,0,0" Click="ConfirmAdd"/>
         </StackPanel>
-        
-        <DataGrid ItemsSource="{Binding DsSinhVien}" AutoGenerateColumns="False" Grid.Row="1">
+
+        <StackPanel Orientation="Vertical" Grid.Row="0" Visibility="Collapsed" x:Name="DeletePanel">
+            <TextBlock Text="Nhập Mã SV cần xóa:"/>
+            <TextBox Width="200" Text="{Binding MaSVXoa, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+            <Button Content="Xác nhận Xóa" Width="200" Click="ConfirmDelete"/>
+        </StackPanel>
+
+
+        <DataGrid ItemsSource="{Binding DsSinhVien}" AutoGenerateColumns="False" Grid.Row="1" SelectedItem="{Binding SelectedSinhVien, Mode=TwoWay}">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Mã SV" Binding="{Binding MaSV}" IsReadOnly="True"/>
                 <DataGridTextColumn Header="Họ Tên" Binding="{Binding HoTen}"/>
@@ -38,9 +51,26 @@
             </DataGrid.Columns>
         </DataGrid>
 
+        <StackPanel Orientation="Horizontal" Grid.Row="0" x:Name="ScorePanel" Visibility="Collapsed">
+            <TextBlock Text="Mã sinh viên:"/>
+            <TextBox Width="100" Text="{Binding NewBangDiem.MaSV, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+
+            <TextBlock Text="Mã học phần:"/>
+            <TextBox Width="100" Text="{Binding NewBangDiem.MaHP, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+
+            <TextBlock Text="Điểm thi:"/>
+            <TextBox Width= "100" Text="{Binding NewBangDiem.DiemThi, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" />
+
+            <Button Content="Lưu điểm" Width="100" Margin="10" Click="ConfirmSaveDiem"/>
+        </StackPanel>
+
         <StackPanel Orientation="Horizontal" Grid.Row="2" HorizontalAlignment="Center" Margin="10">
-            <Button Content="Thêm Sinh Viên" Width="120" Margin="5" Command="{Binding ConfirmAddCommand}"/>
-            <Button Content="Xóa Sinh Viên" Width="120" Margin="5" Command="{Binding DeleteStudentCommand}"/>
+            <Button Content="Thêm Sinh Viên" Width="120" Margin="5" Click="ShowAddPanel" Command="{Binding ShowAddPanel}"/>
+            <Button Content="Xóa Sinh Viên" Width="120" Margin="5" Click="ShowDeletePanel" Command="{Binding ShowDeletePanel}"/>
+            <Button Content="Xem Bảng Điểm" Width="120" Margin="5" Click="OpenBangDiem" Command="{Binding ShowEnterScorePanelCommand}"/>
+            <Button Content="Nhập Điểm" Width="120" Margin="5" Click="ShowEnterScorePanel" Command="{Binding ShowEnterScorePanelCommand}"/>
+
+
         </StackPanel>
     </Grid>
 </Window>
