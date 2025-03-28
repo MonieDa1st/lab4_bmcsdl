@@ -122,8 +122,8 @@ namespace QLSVNhom.ViewModels
             }
 
 
-
-            string query = "EXEC SP_INSERT_STUDENT @MaSV, @HoTen, @NgaySinh, @DiaChi, @MaLop, @TenDN, @MatKhau";
+            byte[] hashedPassword = CryptoHelper.HashSHA1(NewSinhVien.MatKhau);
+            string query = "EXEC SP_INSERT_ENCRYPTED_STUDENT @MaSV, @HoTen, @NgaySinh, @DiaChi, @MaLop, @TenDN, @MatKhau";
             DatabaseHelper.ExecuteNonQuery(query,
                 new SqlParameter("@MaSV", NewSinhVien.MaSV),
                 new SqlParameter("@HoTen", NewSinhVien.HoTen),
@@ -131,7 +131,7 @@ namespace QLSVNhom.ViewModels
                 new SqlParameter("@DiaChi", NewSinhVien.DiaChi ?? (object)DBNull.Value),
                 new SqlParameter("@MaLop", SelectedLop),
                 new SqlParameter("@TenDN", NewSinhVien.TenDN),
-                new SqlParameter("@MatKhau", NewSinhVien.MatKhau));
+                new SqlParameter("@MatKhau", hashedPassword));
 
             MessageBox.Show("Thêm sinh viên thành công!");
             LoadStudents();

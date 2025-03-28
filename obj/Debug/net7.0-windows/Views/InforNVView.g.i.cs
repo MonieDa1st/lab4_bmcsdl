@@ -52,7 +52,7 @@ namespace QLSVNhom.Views {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/QLSVNhom;component/views/infornvview.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/QLSVNhom;V1.0.0.0;component/views/infornvview.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\..\Views\InforNVView.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);
