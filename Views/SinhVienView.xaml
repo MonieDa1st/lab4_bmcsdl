@@ -60,17 +60,12 @@
 
             <TextBlock Text="Điểm thi:"/>
             <TextBox Width= "100" Text="{Binding NewBangDiem.DiemThi, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N2}}" />
-
-            <Button Content="Lưu điểm" Width="100" Margin="10" Click="ConfirmSaveDiem"/>
         </StackPanel>
 
         <StackPanel Orientation="Horizontal" Grid.Row="2" HorizontalAlignment="Center" Margin="10">
             <Button Content="Thêm Sinh Viên" Width="120" Margin="5" Click="ShowAddPanel" Command="{Binding ShowAddPanel}"/>
             <Button Content="Xóa Sinh Viên" Width="120" Margin="5" Click="ShowDeletePanel" Command="{Binding ShowDeletePanel}"/>
-            <Button Content="Xem Bảng Điểm" Width="120" Margin="5" Click="OpenBangDiem" Command="{Binding ShowEnterScorePanelCommand}"/>
-            <Button Content="Nhập Điểm" Width="120" Margin="5" Click="ShowEnterScorePanel" Command="{Binding ShowEnterScorePanelCommand}"/>
-
-
+            <Button Content="Xem Bảng Điểm" Width="120" Margin="5" Command="{Binding OpenBangDiemCommand}"/>
         </StackPanel>
     </Grid>
 </Window>

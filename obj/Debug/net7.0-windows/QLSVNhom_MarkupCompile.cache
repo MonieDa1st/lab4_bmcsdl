@@ -10,11 +10,11 @@ none
 false
 TRACE;DEBUG;NET;NET7_0;NETCOREAPP
 C:\Users\LENOVO\OneDrive\Máy tính\13_22127021_22127279\test\QLSVNhom_lab4\App.xaml
-5-1000299681
+7-608241538
 
-2060467822
+25329344528
 214-1836475856
-MainWindow.xaml;Views\BangDiemView.xaml;Views\LoginView.xaml;Views\LopView.xaml;Views\SinhVienView.xaml;
+MainWindow.xaml;Views\BangDiemView.xaml;Views\InforNVView.xaml;Views\LoginView.xaml;Views\LopView.xaml;Views\SignUpView.xaml;Views\SinhVienView.xaml;
 
 False
 

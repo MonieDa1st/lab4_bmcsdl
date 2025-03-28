@@ -17,6 +17,7 @@
 
             
             <Button Content="Đăng nhập" Command="{Binding LoginCommand}" Height="35" Margin="0,10,0,0"/>
+            <Button Content="Đăng ký" Click="OpenSignUpView" Height="40" Margin="0,5,0,0"/>
 
             <TextBlock Text="{Binding Message}" Foreground="Red" FontWeight="Bold" Margin="0,10,0,0"/>
         </StackPanel>

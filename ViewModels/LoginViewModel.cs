@@ -1,11 +1,9 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using System.ComponentModel;
 using System.Windows.Input;
 using System.Windows;
 using QLSVNhom.Views;
+using QLSVNhom.Helpers;
 
 
 namespace QLSVNhom.ViewModels
@@ -49,19 +47,27 @@ namespace QLSVNhom.ViewModels
         {
             try
             {
-                var (success, userId, pubKey) = _authenticator.Login(Username, Password);
+                byte[] hashedPassword = CryptoHelper.HashSHA1(Password);
+                string hashedPasswordBase64 = Convert.ToBase64String(hashedPassword);
+
+
+                var (success, userId, pubKey) = _authenticator.Login(Username, hashedPassword);
 
                 if (success)
                 {
                     LoggedInUser.Manv = userId;
-                    LoggedInUser.PubKey = pubKey;
-                    Message = $"Đăng nhập thành công!\nUser ID: {userId}\nPublic Key: {pubKey}";
+                    LoggedInUser.PubKey = CryptoHelper.GetPublicKey(hashedPasswordBase64);
+                    LoggedInUser.hashedPasswordBase64 = hashedPasswordBase64;
+                    Message = $"Đăng nhập thành công!";
                     Application.Current.Dispatcher.Invoke(() =>
                     {
                         //Application.Current.Windows.OfType<LoginView>().FirstOrDefault()?.Close();
 
-                        LopView lopView = new LopView();
-                        lopView.Show();
+                        //LopView lopView = new LopView();
+                        //lopView.Show();
+                        InforNVView inforNVView = new InforNVView(LoggedInUser.Manv);
+                        inforNVView.Show();
+
                        
                     });
                 }

@@ -12,6 +12,7 @@ namespace QLSVNhom.Views
     /// </summary>
     public partial class SinhVienView : Window
     {
+
         private SinhVienViewModel viewModel;
         public SinhVienView(string manv, string selectedLop)
         {
@@ -55,34 +56,6 @@ namespace QLSVNhom.Views
             viewModel.DeleteStudentCommand.Execute(viewModel.MaSVXoa);
             DeletePanel.Visibility = Visibility.Collapsed;
         }
-
-        private void OpenBangDiem(object sender, RoutedEventArgs e)
-        {
-            var viewModel = (SinhVienViewModel)DataContext;
-
-            if (viewModel.SelectedSinhVien == null)
-            {
-                MessageBox.Show("Vui lòng chọn một sinh viên từ danh sách.");
-                return;
-            }
-
-            BangDiemView bangDiemView = new BangDiemView(LoggedInUser.Manv, viewModel.SelectedSinhVien.MaSV);
-            bangDiemView.Show();
-        }
-
-        private void ShowEnterScorePanel(object sender, RoutedEventArgs e)
-        {
-            ScorePanel.Visibility = Visibility.Visible;
-            viewModel.NewBangDiem = new QLSVNhom.Models.BangDiem(); // Reset dữ liệu nhập
-        }
-
-        private void ConfirmSaveDiem(object sender, RoutedEventArgs e)
-        {
-            viewModel.SaveDiemCommand.Execute(null);
-            ScorePanel.Visibility = Visibility.Collapsed;
-        }
-
-
     }
 }
     

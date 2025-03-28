@@ -118,3 +118,7 @@ C:\Users\LENOVO\OneDrive\Máy tính\13_22127021_22127279\test\QLSVNhom_lab4\obj\
 C:\Users\LENOVO\OneDrive\Máy tính\13_22127021_22127279\test\QLSVNhom_lab4\obj\Debug\net7.0-windows\QLSVNhom.pdb
 C:\Users\LENOVO\OneDrive\Máy tính\13_22127021_22127279\test\QLSVNhom_lab4\obj\Debug\net7.0-windows\QLSVNhom.genruntimeconfig.cache
 C:\Users\LENOVO\OneDrive\Máy tính\13_22127021_22127279\test\QLSVNhom_lab4\obj\Debug\net7.0-windows\ref\QLSVNhom.dll
+C:\Users\LENOVO\OneDrive\Máy tính\13_22127021_22127279\test\QLSVNhom_lab4\obj\Debug\net7.0-windows\Views\SignUpView.baml
+C:\Users\LENOVO\OneDrive\Máy tính\13_22127021_22127279\test\QLSVNhom_lab4\obj\Debug\net7.0-windows\Views\SignUpView.g.cs
+C:\Users\LENOVO\OneDrive\Máy tính\13_22127021_22127279\test\QLSVNhom_lab4\obj\Debug\net7.0-windows\Views\InforNVView.baml
+C:\Users\LENOVO\OneDrive\Máy tính\13_22127021_22127279\test\QLSVNhom_lab4\obj\Debug\net7.0-windows\Views\InforNVView.g.cs

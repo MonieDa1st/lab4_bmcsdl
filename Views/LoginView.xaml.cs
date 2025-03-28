@@ -25,6 +25,10 @@ namespace QLSVNhom.Views
             }
         }
 
-
+        private void OpenSignUpView(object sender, RoutedEventArgs e)
+        {
+            SignUpView signUpView = new SignUpView();
+            signUpView.ShowDialog();
+        }
     }
 }

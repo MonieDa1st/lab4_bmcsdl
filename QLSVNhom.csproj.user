@@ -2,6 +2,9 @@
 <Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup />
   <ItemGroup>
+    <Compile Update="Views\InforNVView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Views\LopView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -11,8 +14,14 @@
     <Compile Update="Views\BangDiemView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Views\SignUpView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Page Update="Views\InforNVView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Views\LopView.xaml">
       <SubType>Designer</SubType>
     </Page>
@@ -20,6 +29,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\BangDiemView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\SignUpView.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>

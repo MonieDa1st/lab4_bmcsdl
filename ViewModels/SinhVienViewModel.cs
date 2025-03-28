@@ -2,10 +2,12 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Data;
+using System.Security.Cryptography.X509Certificates;
 using System.Windows;
 using System.Windows.Input;
 using Microsoft.Data.SqlClient;
 using QLSVNhom.Models;
+using QLSVNhom.Helpers;
 using QLSVNhom.Views;
 
 namespace QLSVNhom.ViewModels
@@ -23,8 +25,10 @@ namespace QLSVNhom.ViewModels
         public ICommand ShowDeletePanel { get; }
         public ICommand DeleteStudentCommand { get; }
 
-        public ICommand ShowEnterScorePanelCommand { get; }
-        public ICommand SaveDiemCommand { get; }
+
+        public ICommand OpenBangDiemCommand { get; }
+
+
 
 
         //public SinhVien NewSinhVien { get; set; }
@@ -38,9 +42,8 @@ namespace QLSVNhom.ViewModels
             DeleteStudentCommand = new RelayCommand(_ => DeleteStudent());
             ShowAddPanel = new RelayCommand(_ => { IsAdding = true; OnPropertyChanged(nameof(IsAdding)); }, _ => CanEdit);
             ConfirmAddCommand = new RelayCommand(_ => ConfirmAdd());
-            ShowEnterScorePanelCommand = new RelayCommand(_ => ShowEnterScorePanel(), _ => CanEdit);
-            SaveDiemCommand = new RelayCommand(_ => SaveDiem());
-            NewBangDiem = new BangDiem();
+            OpenBangDiemCommand = new RelayCommand(_ => OpenBangDiem(), _ => CanEdit);
+
 
 
 
@@ -170,48 +173,11 @@ namespace QLSVNhom.ViewModels
             OnPropertyChanged(nameof(IsDeleting));
         }
 
-        private bool _isEnteringScore;
-        public bool IsEnteringScore
+        private void OpenBangDiem()
         {
-            get { return _isEnteringScore; }
-            set { _isEnteringScore = value; OnPropertyChanged(nameof(IsEnteringScore)); }
+            BangDiemView bangDiemView = new BangDiemView(SelectedSinhVien.MaSV, LoggedInMaNV);
+            bangDiemView.Show();
         }
-
-        private BangDiem _newBangDiem;
-        public BangDiem NewBangDiem
-        {
-            get { return _newBangDiem; }
-            set { _newBangDiem = value; OnPropertyChanged(nameof(NewBangDiem)); }
-        }
-
-        private void ShowEnterScorePanel()
-        {
-            IsEnteringScore = true;
-            NewBangDiem = new BangDiem(); // Reset dữ liệu nhập
-        }
-
-        private void SaveDiem()
-        {
-            if (string.IsNullOrWhiteSpace(NewBangDiem.MaSV) || string.IsNullOrWhiteSpace(NewBangDiem.MaHP) || NewBangDiem.DiemThi < 0 || NewBangDiem.DiemThi > 10)
-            {
-                MessageBox.Show("Vui lòng nhập đúng thông tin!");
-                return;
-            }
-
-            string query = "EXEC SP_INS_PUBLIC_BANGDIEM @MaSV, @MaHP, @DiemThi, @MaNV";
-            DatabaseHelper.ExecuteNonQuery(query,
-                new SqlParameter("@MaSV", NewBangDiem.MaSV),
-                new SqlParameter("@MaHP", NewBangDiem.MaHP),
-                new SqlParameter("@DiemThi", NewBangDiem.DiemThi),
-                new SqlParameter("@MaNV", LoggedInUser.Manv)
-                );
-
-            MessageBox.Show("Lưu điểm thành công!");
-            IsEnteringScore = false;  // Ẩn bảng nhập sau khi lưu
-            OnPropertyChanged(nameof(IsEnteringScore));
-
-        }
-
 
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged(string propertyName) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));

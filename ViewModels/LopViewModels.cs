@@ -41,6 +41,7 @@ namespace QLSVNhom.ViewModels
             ShowViewPanelCommand = new RelayCommand(_ => { IsViewing = true; OnPropertyChanged(nameof(IsViewing)); });
             ConfirmViewCommand = new RelayCommand(_ => OpenStudentView());
             DsLop = new ObservableCollection<Lop>();
+            LoadData();
 
             SelectedLop = new Lop();
         }
